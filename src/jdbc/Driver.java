@@ -12,17 +12,15 @@ public class Driver {
 public static void main(String[] args) throws SQLException, IOException {
 	  String table = ""; 
 	  
-      try {
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/records", "root",
-          "sairus");
+	  try ( Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/records", "root",
+	          "sairus")) {
 
-        try {
-          Statement myStmt = myConn.createStatement();
+	        try( Statement myStmt = myConn.createStatement()) {
 
-          try {
-            ResultSet myRs = myStmt.executeQuery("SELECT * FROM records.people");
+	               try( ResultSet myRs = myStmt.executeQuery("SELECT * FROM records.people")) {
+	            	   
             Html html = new Html(); 
-            table = Html.open("html")+Html.open("head")+Html.getTitle("Generator")+Html.close("head")+Html.open("body")+Html.getLabel("Table")+Html.open("table")+Html.open("tr")+Html.open("th") + "ID" + Html.close("th")+Html.open("th") + "FIRST_NAME" + Html.close("th")+ Html.open("th") + "LAST_NAME" + Html.close("th")+Html.open("th") + "PHONE_NO" + Html.close("th")+Html.open("th") + "CITY" + Html.close("th")+Html.close("tr")+Html.close("body")+Html.close("html");
+            table = Html.open("html")+Html.open("head")+Html.getTitle("Generator")+Html.close("head")+Html.open("body")+Html.getLabel("Table")+Html.open("table")+Html.open("tr")+Html.open("th") + "ID" + Html.close("th")+Html.open("th") + "FIRST_NAME" + Html.close("th")+ Html.open("th") + "LAST_NAME" + Html.close("th")+Html.open("th") + "PHONE_NO" + Html.close("th")+Html.open("th") + "CITY" + Html.close("th")+Html.close("tr");
 
             while (myRs.next()) {
             	
@@ -31,17 +29,22 @@ public static void main(String[] args) throws SQLException, IOException {
                 myRs.getString("LAST_NAME") + ", " + myRs.getString("PHONE_NO") + ", " +
                 myRs.getString("CITY"));
                
-            }table+=Html.close("table"); 
+            }table+=Html.close("table") ;
+            	table+=Html.close("body"); 
+            	table+=Html.close("html"); 
             
           } 
           catch(Exception e1){
           	System.out.print("Exception 1`");
-           }
-        }
+           } }
+        
         catch(Exception e2){
           	System.out.print("Exception 2`");
-           }
-      }
+           }} 
+      
+      catch(Exception e3){
+        	System.out.print("Exception 3`");
+         }
       
           finally {
         	  System.out.println("finally block");
@@ -69,6 +72,11 @@ public static void main(String[] args) throws SQLException, IOException {
          }
        
      }
+   
+		
+
+
+
    
 		
 
